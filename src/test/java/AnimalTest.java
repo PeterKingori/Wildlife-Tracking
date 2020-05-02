@@ -55,6 +55,25 @@ public class AnimalTest {
         assertEquals(true, Animal.all().get(0).equals(firstAnimal));
         assertEquals(true, Animal.all().get(1).equals(secondAnimal));
     }
+    @Test
+    public void find_returnsAnimalWithSameId_secondAnimal() {
+        Animal firstAnimal = setUpNewAnimal();
+        firstAnimal.save();
+        Animal secondAnimal = new Animal("Animal", "Cheetah", 1);
+        secondAnimal.save();
+        assertEquals(Animal.find(secondAnimal.getId()), secondAnimal);
+    }
+
+    @Test
+    public void save_savesSightingIdIntoDB_true() {
+        Sighting firstSighting = new Sighting("Animal", "Cheetah", "Zone A", "Bob");
+        firstSighting.save();
+        Animal testAnimal = new Animal("Animal", "Cheetah", firstSighting.getId());
+        testAnimal.save();
+        Animal savedAnimal = Animal.find(testAnimal.getId());
+        assertEquals(savedAnimal.getSightingId(), firstSighting.getId());
+    }
+
 
     //helper methods
     public Animal setUpNewAnimal() {

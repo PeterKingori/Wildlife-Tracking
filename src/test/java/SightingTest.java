@@ -14,7 +14,7 @@ public class SightingTest {
     @Test
     public void getTrackingId_sightingInstantiatesWithAnimalId_1() {
         Sighting testSighting = setUpNewSighting();
-        assertEquals("Animal", testSighting.getAnimalId());
+        assertEquals("Animal", testSighting.getCategory());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class SightingTest {
     public void all_returnsAllInstancesOfSightings_true() {
         Sighting testSighting = setUpNewSighting();
         testSighting.save();
-        Sighting secondSighting = new Sighting("Animal", "River side", "Jane");
+        Sighting secondSighting = new Sighting("Animal", "Cheetah","River side", "Jane");
         secondSighting.save();
         assertEquals(true, Sighting.all().get(0).equals(testSighting));
         assertEquals(true, Sighting.all().get(1).equals(secondSighting));
@@ -65,13 +65,13 @@ public class SightingTest {
     public void find_returnsPersonWithSameId_secondSighting() {
         Sighting firstSighting = setUpNewSighting();
         firstSighting.save();
-        Sighting secondSighting = new Sighting("Animal", "River side", "Bob");
+        Sighting secondSighting = new Sighting("Animal", "Lion", "River side", "Bob");
         secondSighting.save();
         assertEquals(Sighting.find(secondSighting.getId()), secondSighting);
     }
 
     // helper methods
     public Sighting setUpNewSighting() {
-        return new Sighting("Animal", "Zone A", "Bob");
+        return new Sighting("Animal", "Elephant","Zone A", "Bob");
     }
 }

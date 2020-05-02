@@ -2,13 +2,15 @@ import org.sql2o.*;
 import java.util.List;
 
 public class Sighting {
-    private String animalId;
+    private String category;
+    private String typeOfAnimal;
     private String location;
     private String rangername;
     private int id;
 
-    public Sighting(String animalId, String location, String rangername) {
-        this.animalId = animalId;
+    public Sighting(String category, String typeOfAnimal, String location, String rangername) {
+        this.category = category;
+        this.typeOfAnimal = typeOfAnimal;
         this.location = location;
         this.rangername = rangername;
     }
@@ -20,25 +22,29 @@ public class Sighting {
 
         Sighting sighting = (Sighting) o;
 
-        if (!animalId.equals(sighting.animalId)) return false;
+        if (id != sighting.id) return false;
+        if (!category.equals(sighting.category)) return false;
+        if (!typeOfAnimal.equals(sighting.typeOfAnimal)) return false;
         if (!location.equals(sighting.location)) return false;
         return rangername.equals(sighting.rangername);
     }
 
     @Override
     public int hashCode() {
-        int result = animalId.hashCode();
+        int result = category.hashCode();
+        result = 31 * result + typeOfAnimal.hashCode();
         result = 31 * result + location.hashCode();
         result = 31 * result + rangername.hashCode();
+        result = 31 * result + id;
         return result;
     }
 
-    public String getAnimalId() {
-        return animalId;
+    public String getCategory() {
+        return category;
     }
 
-    public void setAnimalId(String animalId) {
-        this.animalId = animalId;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getLocation() {
@@ -65,12 +71,22 @@ public class Sighting {
         this.id = id;
     }
 
+    public String getTypeOfAnimal() {
+        return typeOfAnimal;
+    }
+
+    public void setTypeOfAnimal(String typeOfAnimal) {
+        this.typeOfAnimal = typeOfAnimal;
+    }
+
     public void save() {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO sightings (animalId, location, rangername) VALUES " +
-                    "(:animalId, :location, :rangername)";
+            String sql = "INSERT INTO sightings (category, typeofanimal, location, rangername) " +
+                    "VALUES " +
+                    "(:category, :typeofanimal, :location, :rangername)";
             this.id = (int) con.createQuery(sql, true)
-                    .addParameter("animalId", this.animalId)
+                    .addParameter("category", this.category)
+                    .addParameter("typeofanimal", this.typeOfAnimal)
                     .addParameter("location", this.location)
                     .addParameter("rangername", this.rangername)
                     .executeUpdate()
