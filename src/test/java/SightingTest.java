@@ -1,5 +1,4 @@
 import org.junit.*;
-
 import static org.junit.Assert.*;
 
 public class SightingTest {
@@ -7,7 +6,7 @@ public class SightingTest {
     public DatabaseRule database = new DatabaseRule();
 
     @Test
-    public void ranger_InstantiatesCorrectly_true() {
+    public void sighting_InstantiatesCorrectly_true() {
         Sighting testSighting = setUpNewSighting();
         assertEquals(true, testSighting instanceof Sighting);
     }
