@@ -1,11 +1,11 @@
-import models.Sighting;
 import org.junit.*;
-
-import java.security.PublicKey;
 
 import static org.junit.Assert.*;
 
 public class SightingTest {
+    @Rule
+    public DatabaseRule database = new DatabaseRule();
+
     @Test
     public void ranger_InstantiatesCorrectly_true() {
         Sighting testSighting = setUpNewSighting();
@@ -13,9 +13,9 @@ public class SightingTest {
     }
 
     @Test
-    public void getTrackingId_sightingInstantiatesWithTrackingId_1() {
+    public void getTrackingId_sightingInstantiatesWithAnimalId_1() {
         Sighting testSighting = setUpNewSighting();
-        assertEquals(1, testSighting.getTrackingId());
+        assertEquals("Animal", testSighting.getAnimalId());
     }
 
     @Test
@@ -30,8 +30,32 @@ public class SightingTest {
         assertEquals("Bob", testSighting.getRangerName());
     }
 
+    @Test
+    public void equals_returnsTrueIfPropertiesAreTheSame_true() {
+        Sighting testSighting = setUpNewSighting();
+        Sighting secondSighting = setUpNewSighting();
+        assertTrue(testSighting.equals(secondSighting));
+    }
+
+    @Test
+    public void save_insertsObjectIntoDatabase_Sighting() {
+        Sighting testSighting = setUpNewSighting();
+        testSighting.save();
+        assertTrue(Sighting.all().get(0).equals(testSighting));
+    }
+
+    @Test
+    public void all_returnsAllInstancesOfSightings_true() {
+        Sighting testSighting = setUpNewSighting();
+        testSighting.save();
+        Sighting secondSighting = new Sighting("Animal", "River side", "Jane");
+        secondSighting.save();
+        assertEquals(true, Sighting.all().get(0).equals(testSighting));
+        assertEquals(true, Sighting.all().get(1).equals(secondSighting));
+    }
+
     // helper methods
     public Sighting setUpNewSighting() {
-        return new Sighting(1, "Zone A", "Bob");
+        return new Sighting("Animal", "Zone A", "Bob");
     }
 }
