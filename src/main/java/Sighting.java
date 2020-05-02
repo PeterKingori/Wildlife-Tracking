@@ -57,15 +57,24 @@ public class Sighting {
         this.rangername = rangername;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void save() {
         try(Connection con = DB.sql2o.open()) {
             String sql = "INSERT INTO sightings (animalId, location, rangername) VALUES " +
                     "(:animalId, :location, :rangername)";
-            con.createQuery(sql)
+            this.id = (int) con.createQuery(sql, true)
                     .addParameter("animalId", this.animalId)
                     .addParameter("location", this.location)
                     .addParameter("rangername", this.rangername)
-                    .executeUpdate();
+                    .executeUpdate()
+                    .getKey();
         }
     }
 
@@ -75,6 +84,17 @@ public class Sighting {
             return con.createQuery(sql).executeAndFetch(Sighting.class);
         }
     }
+
+    public static Sighting find(int id) {
+        try(Connection con = DB.sql2o.open()) {
+            String sql = "SELECT * FROM sightings where id=:id";
+            Sighting sighting = con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Sighting.class);
+            return sighting;
+        }
+    }
+
 
 
 }
