@@ -62,7 +62,7 @@ public class SightingTest {
     }
 
     @Test
-    public void find_returnsPersonWithSameId_secondSighting() {
+    public void find_returnsAnimalWithSameId_secondSighting() {
         Sighting firstSighting = setUpNewSighting();
         firstSighting.save();
         Sighting secondSighting = new Sighting("Animal", "Lion", "River side", "Bob");
