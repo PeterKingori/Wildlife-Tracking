@@ -4,13 +4,15 @@ import java.util.List;
 public class Animal {
     private String category;
     private String name;
-    private int sightingId;
+    private String health;
+    private String age;
     private int id;
 
-    public Animal(String category, String name, int sightingId) {
+    public Animal(String category, String name, String health, String age) {
         this.category = category;
         this.name = name;
-        this.sightingId = sightingId;
+        this.health = health;
+        this.age = age;
     }
 
     @Override
@@ -20,17 +22,19 @@ public class Animal {
 
         Animal animal = (Animal) o;
 
-        if (sightingId != animal.sightingId) return false;
         if (id != animal.id) return false;
         if (!category.equals(animal.category)) return false;
-        return name.equals(animal.name);
+        if (!name.equals(animal.name)) return false;
+        if (!health.equals(animal.health)) return false;
+        return age.equals(animal.age);
     }
 
     @Override
     public int hashCode() {
         int result = category.hashCode();
         result = 31 * result + name.hashCode();
-        result = 31 * result + sightingId;
+        result = 31 * result + health.hashCode();
+        result = 31 * result + age.hashCode();
         result = 31 * result + id;
         return result;
     }
@@ -43,9 +47,6 @@ public class Animal {
         return name;
     }
 
-    public int getSightingId() {
-        return sightingId;
-    }
 
     public int getId() {
         return id;
@@ -53,12 +54,14 @@ public class Animal {
 
     public void save() {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO animals (category, name, sightingId) VALUES (:category, " +
-                    ":name, :sightingId)";
+            String sql = "INSERT INTO animals (category, name, health, age) VALUES " +
+                    "(:category, " +
+                    ":name, :health, :age)";
             this.id = (int) con.createQuery(sql, true)
                     .addParameter("category", this.category)
                     .addParameter("name", this.name)
-                    .addParameter("sightingId", this.sightingId)
+                    .addParameter("health", this.health)
+                    .addParameter("age", this.age)
                     .executeUpdate()
                     .getKey();
         }

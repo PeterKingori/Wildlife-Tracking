@@ -3,14 +3,14 @@ import java.util.List;
 
 public class Sighting {
     private String category;
-    private String typeOfAnimal;
+    private String name;
     private String location;
     private String rangername;
     private int id;
 
-    public Sighting(String category, String typeOfAnimal, String location, String rangername) {
+    public Sighting(String category, String name, String location, String rangername) {
         this.category = category;
-        this.typeOfAnimal = typeOfAnimal;
+        this.name = name;
         this.location = location;
         this.rangername = rangername;
     }
@@ -24,7 +24,7 @@ public class Sighting {
 
         if (id != sighting.id) return false;
         if (!category.equals(sighting.category)) return false;
-        if (!typeOfAnimal.equals(sighting.typeOfAnimal)) return false;
+        if (!name.equals(sighting.name)) return false;
         if (!location.equals(sighting.location)) return false;
         return rangername.equals(sighting.rangername);
     }
@@ -32,7 +32,7 @@ public class Sighting {
     @Override
     public int hashCode() {
         int result = category.hashCode();
-        result = 31 * result + typeOfAnimal.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + location.hashCode();
         result = 31 * result + rangername.hashCode();
         result = 31 * result + id;
@@ -71,22 +71,22 @@ public class Sighting {
         this.id = id;
     }
 
-    public String getTypeOfAnimal() {
-        return typeOfAnimal;
+    public String getname() {
+        return name;
     }
 
-    public void setTypeOfAnimal(String typeOfAnimal) {
-        this.typeOfAnimal = typeOfAnimal;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public void save() {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO sightings (category, typeofanimal, location, rangername) " +
+            String sql = "INSERT INTO sightings (category, name, location, rangername) " +
                     "VALUES " +
-                    "(:category, :typeofanimal, :location, :rangername)";
+                    "(:category, :name, :location, :rangername)";
             this.id = (int) con.createQuery(sql, true)
                     .addParameter("category", this.category)
-                    .addParameter("typeofanimal", this.typeOfAnimal)
+                    .addParameter("name", this.name)
                     .addParameter("location", this.location)
                     .addParameter("rangername", this.rangername)
                     .executeUpdate()

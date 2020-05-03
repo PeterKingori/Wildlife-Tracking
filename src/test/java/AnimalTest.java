@@ -18,16 +18,9 @@ public class AnimalTest {
     }
 
     @Test
-    public void getSightingId_animalInstantiatesWithCategoryAndSightingId_1() {
-        Animal testAnimal = setUpNewAnimal();
-        assertEquals("Animal", testAnimal.getCategory());
-        assertEquals(1, testAnimal.getSightingId());
-    }
-
-    @Test
     public void equals_returnsTrueIfCategoryAndNameAndSightingIdAreSame_true() {
         Animal testAnimal = setUpNewAnimal();
-        Animal anotherAnimal = new Animal("Animal","Elephant", 1);
+        Animal anotherAnimal = new Animal("Animal","Elephant", "healthy", "young");
         assertTrue(testAnimal.equals(anotherAnimal));
     }
 
@@ -50,7 +43,7 @@ public class AnimalTest {
     public void all_returnsAllInstancesOfAnimal_true() {
         Animal firstAnimal = setUpNewAnimal();
         firstAnimal.save();
-        Animal secondAnimal = new Animal("Animal", "Cheetah", 1);
+        Animal secondAnimal = new Animal("Animal","Cheetah", "healthy", "young");
         secondAnimal.save();
         assertEquals(true, Animal.all().get(0).equals(firstAnimal));
         assertEquals(true, Animal.all().get(1).equals(secondAnimal));
@@ -59,24 +52,15 @@ public class AnimalTest {
     public void find_returnsAnimalWithSameId_secondAnimal() {
         Animal firstAnimal = setUpNewAnimal();
         firstAnimal.save();
-        Animal secondAnimal = new Animal("Animal", "Cheetah", 1);
+        Animal secondAnimal = new Animal("Animal","Cheetah", "healthy", "young");
         secondAnimal.save();
         assertEquals(Animal.find(secondAnimal.getId()), secondAnimal);
     }
 
-    @Test
-    public void save_savesSightingIdIntoDB_true() {
-        Sighting firstSighting = new Sighting("Animal", "Cheetah", "Zone A", "Bob");
-        firstSighting.save();
-        Animal testAnimal = new Animal("Animal", "Cheetah", firstSighting.getId());
-        testAnimal.save();
-        Animal savedAnimal = Animal.find(testAnimal.getId());
-        assertEquals(savedAnimal.getSightingId(), firstSighting.getId());
-    }
 
 
     //helper methods
     public Animal setUpNewAnimal() {
-        return new Animal("Animal","Elephant", 1);
+        return new Animal("Animal","Elephant", "healthy", "young");
     }
 }
