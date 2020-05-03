@@ -1,18 +1,29 @@
 import org.sql2o.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sighting {
     private String category;
-    private String name;
+    private String species;
     private String location;
-    private String rangername;
+    private String health;
+    private String age;
+    private String ranger;
     private int id;
+    private static ArrayList<Sighting> instances = new ArrayList<>();
 
-    public Sighting(String category, String name, String location, String rangername) {
+
+    public Sighting(String category, String species, String location, String health, String age,
+                    String ranger) {
         this.category = category;
-        this.name = name;
+        this.species = species;
         this.location = location;
-        this.rangername = rangername;
+        this.health = health;
+        this.age = age;
+        this.ranger = ranger;
+        instances.add(this);
+        this.id = instances.size();
     }
 
     @Override
@@ -24,17 +35,21 @@ public class Sighting {
 
         if (id != sighting.id) return false;
         if (!category.equals(sighting.category)) return false;
-        if (!name.equals(sighting.name)) return false;
+        if (!species.equals(sighting.species)) return false;
         if (!location.equals(sighting.location)) return false;
-        return rangername.equals(sighting.rangername);
+        if (!health.equals(sighting.health)) return false;
+        if (!age.equals(sighting.age)) return false;
+        return ranger.equals(sighting.ranger);
     }
 
     @Override
     public int hashCode() {
         int result = category.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + species.hashCode();
         result = 31 * result + location.hashCode();
-        result = 31 * result + rangername.hashCode();
+        result = 31 * result + health.hashCode();
+        result = 31 * result + age.hashCode();
+        result = 31 * result + ranger.hashCode();
         result = 31 * result + id;
         return result;
     }
@@ -43,74 +58,44 @@ public class Sighting {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public String getSpecies() {
+        return species;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getRangerName() {
-        return rangername;
-    }
-
-    public void setRangerName(String rangername) {
-        this.rangername = rangername;
+    public String getRanger() {
+        return ranger;
     }
 
     public int getId() {
         return id;
     }
 
+    public String getHealth() {
+        return health;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getname() {
-        return name;
+    public static ArrayList<Sighting> getAll() {
+        return instances;
     }
 
-    public void setname(String name) {
-        this.name = name;
+    public static void clearAll() {
+        instances.clear();
     }
 
-    public void save() {
-        try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO sightings (category, name, location, rangername) " +
-                    "VALUES " +
-                    "(:category, :name, :location, :rangername)";
-            this.id = (int) con.createQuery(sql, true)
-                    .addParameter("category", this.category)
-                    .addParameter("name", this.name)
-                    .addParameter("location", this.location)
-                    .addParameter("rangername", this.rangername)
-                    .executeUpdate()
-                    .getKey();
-        }
+    public static Sighting findById(int id) {
+        return instances.get(id - 1);
     }
-
-    public static List<Sighting> all() {
-        String sql = "SELECT * FROM sightings";
-        try(Connection con = DB.sql2o.open()) {
-            return con.createQuery(sql).executeAndFetch(Sighting.class);
-        }
-    }
-
-    public static Sighting find(int id) {
-        try(Connection con = DB.sql2o.open()) {
-            String sql = "SELECT * FROM sightings where id=:id";
-            Sighting sighting = con.createQuery(sql)
-                    .addParameter("id", id)
-                    .executeAndFetchFirst(Sighting.class);
-            return sighting;
-        }
-    }
-
-
 
 }
