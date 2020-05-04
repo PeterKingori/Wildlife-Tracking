@@ -1,3 +1,6 @@
+package models;
+
+import models.Animal;
 import org.junit.*;
 import static org.junit.Assert.*;
 

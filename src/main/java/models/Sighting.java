@@ -1,7 +1,4 @@
-import org.sql2o.*;
-
-import java.util.ArrayList;
-import java.util.List;
+package models;
 
 public class Sighting {
     private String category;
@@ -11,8 +8,6 @@ public class Sighting {
     private String age;
     private String ranger;
     private int id;
-    private static ArrayList<Sighting> instances = new ArrayList<>();
-
 
     public Sighting(String category, String species, String location, String health, String age,
                     String ranger) {
@@ -22,8 +17,6 @@ public class Sighting {
         this.health = health;
         this.age = age;
         this.ranger = ranger;
-        instances.add(this);
-        this.id = instances.size();
     }
 
     @Override
@@ -86,30 +79,29 @@ public class Sighting {
         this.id = id;
     }
 
-    public static ArrayList<Sighting> getAll() {
-        return instances;
-    }
-
-    public static void clearAll() {
-        instances.clear();
-    }
-
-    public static Sighting findById(int id) {
-        return instances.get(id - 1);
-    }
-
-    public void update(String category, String species, String location, String health, String age,
-                       String ranger) {
+    public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void setSpecies(String species) {
         this.species = species;
+    }
+
+    public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void setHealth(String health) {
         this.health = health;
+    }
+
+    public void setAge(String age) {
         this.age = age;
+    }
+
+    public void setRanger(String ranger) {
         this.ranger = ranger;
     }
 
-    public void deleteSighting() {
-        instances.remove(id - 1);
-    }
 
 }

@@ -1,0 +1,65 @@
+package dao;
+
+import models.Sighting;
+import org.sql2o.*;
+import org.junit.*;
+import static org.junit.Assert.*;
+
+public class Sql2oSightingDaoTest {
+    private Sql2oSightingDao sightingDao;
+    private Connection conn;
+
+    @Before
+    public void setUp() throws Exception {
+        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        sightingDao = new Sql2oSightingDao(sql2o);
+        conn = sql2o.open();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        conn.close();
+    }
+
+    @Test
+    public void addingSightingSetsId() throws Exception {
+        Sighting sighting = setUpNewSighting();
+        int originalSightingId = sighting.getId();
+        sightingDao.add(sighting);
+        assertNotEquals(originalSightingId, sighting.getId());
+    }
+
+    @Test
+    public void existingSightingsCanBeFoundById() throws Exception {
+        Sighting sighting = setUpNewSighting();
+        sightingDao.add(sighting);
+        Sighting foundSighting = sightingDao.findById(sighting.getId());
+        assertEquals(sighting, foundSighting);
+    }
+
+    @Test
+    public void AllSightingsAreCorrectlyReturned_true() throws Exception {
+        Sighting sighting = setUpNewSighting();
+        Sighting secondSighting = new Sighting("Endangered", "Panda", "Riverside",
+                "Healthy", "Young", "James");
+        sightingDao.add(sighting);
+        sightingDao.add(secondSighting);
+        assertEquals(2, sightingDao.getAll().size());
+    }
+
+    @Test
+    public void findReturnsCorrectSightingWhenMoreThanOneExists() throws Exception {
+        Sighting sighting = setUpNewSighting();
+        Sighting secondSighting = new Sighting("Endangered", "Panda", "Riverside",
+                "Healthy", "Young", "James");
+        sightingDao.add(sighting);
+        sightingDao.add(secondSighting);
+        assertEquals(2, sightingDao.findById(secondSighting.getId()).getId());
+    }
+
+        //helper methods
+    public Sighting setUpNewSighting() {
+        return new Sighting("Animal", "Elephant","Zone A", "Ill", "Adult", "Bob");
+    }
+}
