@@ -21,4 +21,5 @@ public interface SightingDao {
 
     //DELETE
     void deleteById(int id);
+    void clearAllSightings();
 }

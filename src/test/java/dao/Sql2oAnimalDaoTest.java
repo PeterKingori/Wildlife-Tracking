@@ -16,10 +16,10 @@ public class Sql2oAnimalDaoTest {
     private static Sql2oSightingDao sightingDao;
     private static Connection conn;
 
-    @Before
+    @BeforeClass
     public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        String connectionString = "jdbc:postgresql://localhost:5432/wildlife_tracker_test";
+        Sql2o sql2o = new Sql2o(connectionString, null, null);
         animalDao = new Sql2oAnimalDao(sql2o);
         sightingDao = new Sql2oSightingDao(sql2o);
         conn = sql2o.open();
@@ -27,7 +27,15 @@ public class Sql2oAnimalDaoTest {
 
     @After
     public void tearDown() throws Exception {
-        conn.close();
+        System.out.println("clearing database");
+        animalDao.clearAllAnimals();
+        sightingDao.clearAllSightings();
+    }
+
+    @AfterClass
+    public static void shutDown() throws Exception {
+        conn.close(); // close connection once after this entire test file is finished
+        System.out.println("connection closed");
     }
 
     @Test
@@ -78,6 +86,10 @@ public class Sql2oAnimalDaoTest {
         assertEquals(0, animalDao.getAll().size());
     }
 
+    @Test
+    public void find_returnsNullWhenNoAnimalFound_null() {
+        assertTrue(animalDao.findById(999) == null);
+    }
 
     //helper methods
     public Animal setUpNewAnimal() {

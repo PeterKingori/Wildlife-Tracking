@@ -6,19 +6,25 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class Sql2oSightingDaoTest {
-    private Sql2oSightingDao sightingDao;
+    private static Sql2oSightingDao sightingDao;
     private Connection conn;
 
-    @Before
+    @BeforeClass
     public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        String connectionString = "jdbc:postgresql://localhost:5432/wildlife_tracker_test";
+        Sql2o sql2o = new Sql2o(connectionString, null, null);
         sightingDao = new Sql2oSightingDao(sql2o);
         conn = sql2o.open();
     }
 
     @After
     public void tearDown() throws Exception {
+        System.out.println("clearing database");
+        sightingDao.clearAllSightings();
+    }
+
+    @AfterClass
+    public void shutDown() throws Exception {
         conn.close();
     }
 

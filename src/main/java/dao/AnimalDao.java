@@ -21,4 +21,5 @@ public interface AnimalDao {
 
     //DELETE
     void deleteById(int id);
+    void clearAllAnimals();
 }
