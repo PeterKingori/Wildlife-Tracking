@@ -2,17 +2,17 @@ CREATE DATABASE wildlife_tracker;
 \c wildlife_tracker;
 
 CREATE TABLE IF NOT EXISTS sightings (
-    id int PRIMARY KEY,
-    category VARCHAR,
-    species VARCHAR,
-    location VARCHAR,
-    health VARCHAR,
-    age VARCHAR,
-    ranger VARCHAR
+id SERIAL PRIMARY KEY,
+category VARCHAR,
+species VARCHAR,
+location VARCHAR,
+health VARCHAR,
+age VARCHAR,
+ranger VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS animals (
-id int PRIMARY KEY,
+id SERIAL PRIMARY KEY,
 species VARCHAR
 );
 

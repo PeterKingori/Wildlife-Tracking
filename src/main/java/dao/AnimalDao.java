@@ -1,7 +1,6 @@
 package dao;
 
 import models.Animal;
-import models.Sighting;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface AnimalDao {
     List<Animal> getAll();
 
     //CREATE
-    void add (Animal category);
+    void add(Animal animal);
 
     //READ
     Animal findById(int id);

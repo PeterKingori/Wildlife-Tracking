@@ -4,7 +4,6 @@ import models.Animal;
 import org.junit.Test;
 
 import models.Sighting;
-import models.Animal;
 import org.junit.After;
 import org.junit.Before;
 import org.sql2o.*;
@@ -13,15 +12,13 @@ import static org.junit.Assert.*;
 
 public class Sql2oAnimalDaoTest {
     private static Sql2oAnimalDao animalDao;
-    private static Sql2oSightingDao sightingDao;
     private static Connection conn;
 
     @BeforeClass
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
         String connectionString = "jdbc:postgresql://localhost:5432/wildlife_tracker_test";
         Sql2o sql2o = new Sql2o(connectionString, null, null);
         animalDao = new Sql2oAnimalDao(sql2o);
-        sightingDao = new Sql2oSightingDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -29,7 +26,6 @@ public class Sql2oAnimalDaoTest {
     public void tearDown() throws Exception {
         System.out.println("clearing database");
         animalDao.clearAllAnimals();
-        sightingDao.clearAllSightings();
     }
 
     @AfterClass
@@ -57,8 +53,8 @@ public class Sql2oAnimalDaoTest {
     @Test
     public void AllAnimalsAreCorrectlyReturned_true() {
         Animal testAnimal = setUpNewAnimal();
-        Animal anotherAnimal = new Animal("Rhino");
         animalDao.add(testAnimal);
+        Animal anotherAnimal = new Animal("Rhino");
         animalDao.add(anotherAnimal);
         assertEquals(2, animalDao.getAll().size());
     }
@@ -86,10 +82,6 @@ public class Sql2oAnimalDaoTest {
         assertEquals(0, animalDao.getAll().size());
     }
 
-    @Test
-    public void find_returnsNullWhenNoAnimalFound_null() {
-        assertTrue(animalDao.findById(999) == null);
-    }
 
     //helper methods
     public Animal setUpNewAnimal() {

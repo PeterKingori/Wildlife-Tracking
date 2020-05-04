@@ -7,10 +7,10 @@ import static org.junit.Assert.*;
 
 public class Sql2oSightingDaoTest {
     private static Sql2oSightingDao sightingDao;
-    private Connection conn;
+    private static Connection conn;
 
     @BeforeClass
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
         String connectionString = "jdbc:postgresql://localhost:5432/wildlife_tracker_test";
         Sql2o sql2o = new Sql2o(connectionString, null, null);
         sightingDao = new Sql2oSightingDao(sql2o);
@@ -24,8 +24,9 @@ public class Sql2oSightingDaoTest {
     }
 
     @AfterClass
-    public void shutDown() throws Exception {
+    public static void shutDown() throws Exception {
         conn.close();
+        System.out.println("connection closed");
     }
 
     @Test
@@ -57,9 +58,9 @@ public class Sql2oSightingDaoTest {
     @Test
     public void findReturnsCorrectSightingWhenMoreThanOneExists() throws Exception {
         Sighting sighting = setUpNewSighting();
+        sightingDao.add(sighting);
         Sighting secondSighting = new Sighting("Endangered", "Panda", "Riverside",
                 "Healthy", "Young", "James");
-        sightingDao.add(sighting);
         sightingDao.add(secondSighting);
         assertEquals(2, sightingDao.findById(secondSighting.getId()).getId());
     }
