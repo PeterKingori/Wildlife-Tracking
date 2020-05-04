@@ -25,12 +25,6 @@ public class AnimalTest {
         assertTrue(testAnimal.equals(anotherAnimal));
     }
 
-    @Test
-    public void AllAnimalsAreCorrectlyReturned_true() {
-        Animal testAnimal = setUpNewAnimal();
-        Animal anotherAnimal = new Animal("Rhino");
-        assertEquals(2, Animal.getAll().size());
-    }
 
     //helper methods
     public Animal setUpNewAnimal() {

@@ -16,7 +16,8 @@ public interface SightingDao {
     Sighting findById(int id);
 
     //UPDATE
-    void update(int id, String category, String species, String location, String health,String age,String ranger);
+    void update(int id, String category, String species, String location, String health,
+                String age, String ranger);
 
     //DELETE
     void deleteById(int id);

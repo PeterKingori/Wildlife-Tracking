@@ -103,5 +103,4 @@ public class Sighting {
         this.ranger = ranger;
     }
 
-
 }

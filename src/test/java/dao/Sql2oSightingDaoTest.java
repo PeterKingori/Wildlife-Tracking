@@ -74,9 +74,7 @@ public class Sql2oSightingDaoTest {
         Sighting sighting = new Sighting(initialCategory, initialSpecies, initialLocation,
                 initialHealth, initialAge, initialRanger);
         sightingDao.add(sighting);
-        sightingDao.update(sighting.getId(),"Endangered Animal", "Cheetah", "Zone C", "Healthy",
-                "Young",
-                "Bob");
+        sightingDao.update(sighting.getId(),"Endangered", "Cheetah", "Zone C", "Healthy", "Young", "Bob");
         Sighting updatedSighting = sightingDao.findById(sighting.getId());
         assertNotEquals(initialCategory, updatedSighting.getCategory());
         assertNotEquals(initialSpecies, updatedSighting.getSpecies());

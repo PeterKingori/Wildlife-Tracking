@@ -46,9 +46,9 @@ public class Sql2oSightingDao implements SightingDao {
 
     @Override
     public void update(int id, String newCategory, String newSpecies, String newLocation,
-                       String newHealth,
-                       String newAge, String newRanger){
-        String sql = "UPDATE sightings SET (category, species, location, health, age, ranger) = (:category, :species, :location, :health, :age, :ranger) WHERE id=:id";
+                       String newHealth, String newAge, String newRanger){
+        String sql = "UPDATE sightings SET (category, species, location, health, age, ranger) = (:category, :species, :location, :health, :age, :ranger) WHERE " +
+                "id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("category", newCategory)
