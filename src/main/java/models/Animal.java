@@ -1,15 +1,11 @@
 package models;
 
-import java.util.ArrayList;
-
 public class Animal {
     private String species;
     private int id;
-    private static ArrayList<Animal> instances = new ArrayList<>();
 
     public Animal(String species) {
         this.species = species;
-        this.instances.add(this);
     }
 
     @Override
@@ -38,12 +34,5 @@ public class Animal {
         return id;
     }
 
-    public static ArrayList<Animal> getAll() {
-        return instances;
-    }
-
-    public static void clearAll() {
-        instances.clear();
-    }
 }
 

@@ -9,3 +9,8 @@ CREATE TABLE IF NOT EXISTS sightings (
     age VARCHAR,
     ranger VARCHAR
 );
+
+CREATE TABLE IF NOT EXISTS animals (
+id int PRIMARY KEY auto_increment,
+species VARCHAR
+);
