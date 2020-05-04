@@ -41,5 +41,31 @@ public class App {
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //get: show a form to update a sighting
+        get("/sightings/:id/update", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            int idOfSightingToEdit = Integer.parseInt(request.params("id"));
+            Sighting editSighting = Sighting.findById(idOfSightingToEdit);
+            model.put("editSighting", editSighting);
+            return new ModelAndView(model, "sightings-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //post: process a form to update a sighting
+        post("/sightings/:id/edit", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String newCategory = request.queryParams("category");
+            String newSpecies = request.queryParams("species");
+            String newLocation = request.queryParams("location");
+            String newHealth = request.queryParams("health");
+            String newAge = request.queryParams("age");
+            String newRanger = request.queryParams("ranger");
+            int idOfSightingToEdit = Integer.parseInt(request.params("id"));
+            Sighting editSighting = Sighting.findById(idOfSightingToEdit);
+            editSighting.update(newCategory, newSpecies, newLocation, newHealth, newAge, newRanger);
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //get: delete an individual sighting
+
     }
 }

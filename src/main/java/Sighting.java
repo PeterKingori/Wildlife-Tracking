@@ -98,4 +98,18 @@ public class Sighting {
         return instances.get(id - 1);
     }
 
+    public void update(String category, String species, String location, String health, String age,
+                       String ranger) {
+        this.category = category;
+        this.species = species;
+        this.location = location;
+        this.health = health;
+        this.age = age;
+        this.ranger = ranger;
+    }
+
+    public void deleteSighting() {
+        instances.remove(id - 1);
+    }
+
 }
