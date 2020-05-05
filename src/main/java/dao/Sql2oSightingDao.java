@@ -3,6 +3,7 @@ package dao;
 import models.Sighting;
 import org.sql2o.*;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class Sql2oSightingDao implements SightingDao {
 
@@ -14,8 +15,9 @@ public class Sql2oSightingDao implements SightingDao {
 
     @Override
     public void add(Sighting sighting) {
-        String sql = "INSERT INTO sightings (category, species, location, health, age, ranger) " +
-                "VALUES (:category, :species, :location, :health, :age, :ranger)";
+        String sql = "INSERT INTO sightings (category, species, location, health, age, ranger, " +
+                "date_sighted) " +
+                "VALUES (:category, :species, :location, :health, :age, :ranger, now())";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql, true)
                     .bind(sighting)
@@ -47,7 +49,8 @@ public class Sql2oSightingDao implements SightingDao {
     @Override
     public void update(int id, String newCategory, String newSpecies, String newLocation,
                        String newHealth, String newAge, String newRanger){
-        String sql = "UPDATE sightings SET (category, species, location, health, age, ranger) = (:category, :species, :location, :health, :age, :ranger) WHERE " +
+        String sql = "UPDATE sightings SET (category, species, location, health, age, ranger) = (:category, :species, :location, :health, :age, :ranger) " +
+                "WHERE " +
                 "id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)

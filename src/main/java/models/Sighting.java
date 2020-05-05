@@ -1,4 +1,5 @@
 package models;
+import java.sql.Timestamp;
 
 public class Sighting {
     private String category;
@@ -7,6 +8,7 @@ public class Sighting {
     private String health;
     private String age;
     private String ranger;
+    private String date_sighted;
     private int id;
 
     public Sighting(String category, String species, String location, String health, String age,
@@ -32,7 +34,8 @@ public class Sighting {
         if (!location.equals(sighting.location)) return false;
         if (!health.equals(sighting.health)) return false;
         if (!age.equals(sighting.age)) return false;
-        return ranger.equals(sighting.ranger);
+        if (!ranger.equals(sighting.ranger)) return false;
+        return date_sighted.equals(sighting.date_sighted);
     }
 
     @Override
@@ -43,6 +46,7 @@ public class Sighting {
         result = 31 * result + health.hashCode();
         result = 31 * result + age.hashCode();
         result = 31 * result + ranger.hashCode();
+        result = 31 * result + date_sighted.hashCode();
         result = 31 * result + id;
         return result;
     }
@@ -73,6 +77,10 @@ public class Sighting {
 
     public String getAge() {
         return age;
+    }
+
+    public String getDate_sighted() {
+        return date_sighted;
     }
 
     public void setId(int id) {

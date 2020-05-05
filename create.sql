@@ -8,7 +8,8 @@ species VARCHAR,
 location VARCHAR,
 health VARCHAR,
 age VARCHAR,
-ranger VARCHAR
+ranger VARCHAR,
+date_sighted VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS animals (
