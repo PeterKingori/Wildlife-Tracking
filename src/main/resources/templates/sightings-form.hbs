@@ -1,6 +1,6 @@
 {{#partial "content"}}
     {{#if editSighting}}
-        <div class="col-md-4">
+        <div class="col-md-4 text-white">
             <h4>Edit this sighting</h4>
             <form action="/sightings/{{editSighting.id}}/edit" method="post">
                 <div class="form-group">
@@ -58,7 +58,7 @@
             </form>
         </div>
         {{else}}
-        <div class="col-md-4">
+        <div class="col-md-4 text-white">
             <h4>Add a new sighting</h4>
             <form action="/sightings/new" method="post">
                 <div class="form-group">
