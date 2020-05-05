@@ -14,10 +14,21 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class App {
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
     public static void main(String[] args) {
+        port(getHerokuAssignedPort());
         staticFileLocation("/public");
         String connectionString = "jdbc:postgresql://localhost:5432/wildlife_tracker";
         Sql2o sql2o = new Sql2o(connectionString, null, null);
+
+        //String connectionString = "jdbc:postgresql://ec2-18-210-214-86.compute-1.amazonaws" +".com:5432/dc2222net8b3rj\n";
+        //Sql2o sql2o = new Sql2o(connectionString, "aiohbpwvvhhfal","aade4b2df7a4efd53b3613515f131a0554a1ef65c2a2993583f6d244a5ac1229");
         Sql2oSightingDao sightingDao = new Sql2oSightingDao(sql2o);
 
         //get: show all sightings
