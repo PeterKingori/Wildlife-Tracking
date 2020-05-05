@@ -22,6 +22,8 @@
 # Logs and databases #
 ############
 *.log
+*.sql
+*.sqlite
 
 # OS generated files #
 ############
@@ -36,8 +38,14 @@ Thumbs.db
 # Java and Gradle #
 ############
 build/
+.gradle/
 out/
 out
+.gradle
+gradle/
+gradlew.bat
+gradlew
+settings.gradle
 
 # IntelliJ #
 ############
