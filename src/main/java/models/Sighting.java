@@ -34,8 +34,7 @@ public class Sighting {
         if (!location.equals(sighting.location)) return false;
         if (!health.equals(sighting.health)) return false;
         if (!age.equals(sighting.age)) return false;
-        if (!ranger.equals(sighting.ranger)) return false;
-        return date_sighted.equals(sighting.date_sighted);
+        return ranger.equals(sighting.ranger);
     }
 
     @Override
@@ -46,7 +45,6 @@ public class Sighting {
         result = 31 * result + health.hashCode();
         result = 31 * result + age.hashCode();
         result = 31 * result + ranger.hashCode();
-        result = 31 * result + date_sighted.hashCode();
         result = 31 * result + id;
         return result;
     }
