@@ -1,0 +1,119 @@
+{{#partial "content"}}
+    {{#if editSighting}}
+        <div class="col-md-4 text-white">
+            <h4>Edit this sighting</h4>
+            <form action="/sightings/{{editSighting.id}}/edit" method="post">
+                <div class="form-group">
+                    <label for="ranger">Ranger's name</label>
+                    <input type="text" class="form-control" id="ranger" name="ranger"
+                           value="{{editSighting.ranger}}">
+                </div>
+                <div class="form-group">
+                    <label>Is the animal endangered?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="yes" name="category"
+                               value="Endangered">
+                        <label for="yes" class="form-check-label">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="no" name="category"
+                               value="Common">
+                        <label for="no" class="form-check-label">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="species">Species</label>
+                    <input type="text" class="form-control" id="species" name="species"
+                           value="{{editSighting.species}}">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select class="form-control" id="location" name="location">
+                        <option selected>Choose...</option>
+                        <option value="Zone A">Zone A</option>
+                        <option value="Riverside">Riverside</option>
+                        <option value="Treeline">Treeline</option>
+                        <option value="Zone C">Zone C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="health">Health</label>
+                    <select class="form-control" id="health" name="health">
+                        <option selected>Choose...</option>
+                        <option value="Healthy">Healthy</option>
+                        <option value="Ill">Ill</option>
+                        <option value="Okay">Okay</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <select class="form-control" id="age" name="age">
+                        <option selected>Choose...</option>
+                        <option value="Newborn">Newborn</option>
+                        <option value="Young">Young</option>
+                        <option value="Adult">Adult</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Update sighting</button>
+            </form>
+        </div>
+        {{else}}
+        <div class="col-md-4 text-white">
+            <h4>Add a new sighting</h4>
+            <form action="/sightings/new" method="post">
+                <div class="form-group">
+                    <label for="ranger">Ranger's name</label>
+                    <input type="text" class="form-control" id="ranger" name="ranger">
+                </div>
+                <div class="form-group">
+                    <label>Is the animal endangered?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="yes" name="category"
+                               value="Endangered">
+                        <label for="yes" class="form-check-label">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="no" name="category"
+                               value="Common">
+                        <label for="no" class="form-check-label">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="species">Species</label>
+                    <input type="text" class="form-control" id="species" name="species">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select class="form-control" id="location" name="location">
+                        <option selected>Choose...</option>
+                        <option value="Zone A">Zone A</option>
+                        <option value="Riverside">Riverside</option>
+                        <option value="Treeline">Treeline</option>
+                        <option value="Zone C">Zone C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="health">Health</label>
+                    <select class="form-control" id="health" name="health">
+                        <option selected>Choose...</option>
+                        <option value="Healthy">Healthy</option>
+                        <option value="Ill">Ill</option>
+                        <option value="Okay">Okay</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <select class="form-control" id="age" name="age">
+                        <option selected>Choose...</option>
+                        <option value="Newborn">Newborn</option>
+                        <option value="Young">Young</option>
+                        <option value="Adult">Adult</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add sighting</button>
+            </form>
+        </div>
+        {{/if}}
+    {{/partial}}
+
+{{> layout.hbs}}

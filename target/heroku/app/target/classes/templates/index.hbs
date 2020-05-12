@@ -1,0 +1,42 @@
+{{#partial "content"}}
+
+    <div class="col-md-8 text-white">
+        <h1>Sightings</h1>
+        <table class="table">
+            <thead>
+            <tr class="text-white">
+                <th scope="col">Category</th>
+                <th scope="col">Species</th>
+                <th scope="col">Location</th>
+                <th scope="col">Health</th>
+                <th scope="col">Age</th>
+                <th scope="col">Ranger Name</th>
+                <th scope="col">Date Sighted</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#if sightings}}
+                    {{#each sightings}}
+                        <tr class="text-white">
+                            <td>{{category}}</td>
+                            <td>{{species}}</td>
+                            <td>{{location}}</td>
+                            <td>{{health}}</td>
+                            <td>{{age}}</td>
+                            <td>{{ranger}}</td>
+                            <td>{{date_sighted}}</td>
+                            <td><a href="/sightings/{{id}}/update" class="text-white">Update</a></td>
+                            <td><a href="/sightings/{{id}}/delete" class="text-white">Delete</a></td>
+                        </tr>
+                    {{/each}}
+            {{else}}
+                <p>No sightings yet</p>
+            {{/if}}
+            </tbody>
+        </table>
+    </div>
+{{/partial}}
+
+{{> layout.hbs}}
