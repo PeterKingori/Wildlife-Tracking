@@ -22,7 +22,6 @@
 # Logs and databases #
 ############
 *.log
-*.sql
 
 # OS generated files #
 ############
@@ -45,7 +44,6 @@ gradle/
 gradlew.bat
 gradlew
 settings.gradle
-!gradle-wrapper.jar
 
 # IntelliJ #
 ############
